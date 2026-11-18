@@ -1,31 +1,33 @@
-<!DOCTYPE html>
-<!-- A placeholder from the Home Sales template. Replace this file with your site's first page. -->
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Under construction</title>
-  <!-- An empty icon, so the browser doesn't log an error looking for favicon.ico -->
-  <link rel="icon" href="data:,">
-  <style>
-    :root { color-scheme: light dark; }
-    body {
-      max-width: 40rem;
-      margin: 0 auto;
-      padding: 3rem 1rem;
-      font-family: system-ui, sans-serif;
-      line-height: 1.5;
-    }
-    footer { margin-top: 3rem; font-size: 0.875rem; opacity: 0.75; }
-  </style>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Explore home sales near university campuses. Compare college-town prices, time on market, and distance to campus with transparent data definitions.">
+<title>Campus & Keys | College-town home sales</title>
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="assets/styles.css">
+<script defer src="assets/data.js"></script><script defer src="assets/app.js"></script>
 </head>
 <body>
-  <main>
-    <h1>This site is under construction</h1>
-    <p>It will show findings from the College-town home sales dataset.</p>
-  </main>
-  <footer>
-    <p>Data: College-town home sales dataset, version 1.0 (2026). University of Illinois-Deloitte Foundation Center for Business Emerging Technologies. Data collected March 2026.</p>
-  </footer>
-</body>
-</html>
+<a class="skip" href="#explorer">Skip to explorer</a>
+<header class="topbar"><a class="brand" href="#"><span class="brand-icon" aria-hidden="true">⌂</span> Campus <span class="amp">&</span> Keys</a><nav aria-label="Main navigation"><a class="active" href="#explorer">Market explorer</a><a href="#methodology">About the data</a><a href="https://github.com/ziqinice/college-town-home-sales" target="_blank" rel="noopener">GitHub</a></nav><span class="course">BDI 475 · FALL 2026</span></header>
+<main>
+<section class="hero"><div><p class="eyebrow">A CLOSER LOOK AT COLLEGE TOWNS</p><h1>Different campuses.<br>Different housing markets.</h1><p class="hero-copy">Explore what homes sold for, how quickly they found a buyer, and how the market changes around campus.</p></div><div class="hero-facts"><span class="tiny-label">THE DATASET AT A GLANCE</span><div><strong id="total-count">—</strong><span>completed home sales</span></div><p><b id="campus-count">—</b> campuses <i></i><b id="city-count">—</b> cities & towns <i></i><b id="state-count">—</b> states</p><span class="collection">Collected March 2026 · historical sales</span></div></section>
+<section id="explorer" class="workspace" aria-labelledby="explore-title">
+<aside class="filters"><div class="filter-heading"><h2>Find your market</h2><button id="reset" class="text-button" type="button">Reset</button></div><p>Narrow the view. Every chart and metric updates together.</p>
+<label for="campus">Campus area</label><select id="campus"><option value="">All campuses</option></select>
+<label for="city">City or town</label><select id="city"><option value="">All cities & towns</option></select>
+<label for="distance">Distance to campus</label><select id="distance"><option value="">Any distance</option><option value="1">Within 1 mile</option><option value="3">Within 3 miles</option><option value="5">Within 5 miles</option><option value="10">Within 10 miles</option></select>
+<label for="budget">Sale price</label><select id="budget"><option value="">All eligible prices</option><option value="250000">Up to $250,000</option><option value="500000">Up to $500,000</option><option value="1000000">Up to $1,000,000</option></select>
+<div class="filter-note"><span aria-hidden="true">ⓘ</span><p>Prices from <strong>$10,000 to $5 million</strong> are included. Distance is straight-line, not driving distance.</p></div><a class="method-link" href="#methodology">Read the methodology</a>
+</aside>
+<div class="results"><div class="section-heading"><div><p class="eyebrow dark">MARKET EXPLORER</p><h2 id="explore-title">The big picture</h2></div><span class="data-tag">Dataset v1.0</span></div>
+<p id="status" class="status" role="status" aria-live="polite">Loading the home sales dataset…</p><div id="error" class="error" hidden></div>
+<div class="metrics" aria-label="Market summary"><article class="metric"><span>Eligible sales</span><strong id="sales">—</strong><small id="sales-note">Completed transactions</small></article><article class="metric"><span>Median sale price</span><strong id="median">—</strong><small>The middle sale, in USD</small></article><article class="metric"><span>Median price / sq ft</span><strong id="ppsf">—</strong><small id="ppsf-note">Positive reported living area only</small></article><article class="metric"><span>Median days on market</span><strong id="dom">—</strong><small id="dom-note">Listing to contract</small></article></div>
+<div class="charts"><article class="panel city-panel"><div class="panel-heading"><div><h3>What does a home cost here?</h3><p>Median sale price by city · USD</p></div><span class="legend"><i></i>Median price</span></div><div id="city-chart" class="city-chart" aria-label="Median sale prices by city"></div><p class="chart-footnote">Select a city bar to explore its sales. Each bar shows the eligible sale count.</p></article>
+<article class="panel distribution-panel"><div class="panel-heading"><div><h3>Where prices cluster</h3><p>Number of eligible sales by price range</p></div></div><div id="distribution" class="distribution"></div><div class="insight"><span class="eyebrow dark">IN THIS SELECTION</span><p id="insight">Your market summary will appear here.</p></div><p class="chart-footnote">The final range includes all eligible sales at or above $2 million.</p></article></div>
+<article class="panel transactions"><div class="panel-heading"><div><h3>Behind the numbers</h3><p id="table-caption">Explore the individual sales in your selection.</p></div><button id="download" class="outline-button" type="button" disabled>Download selection</button></div><div class="table-controls"><label for="sort">Sort sales</label><select id="sort"><option value="recent">Sale date: newest first</option><option value="price-asc">Price: low to high</option><option value="price-desc">Price: high to low</option><option value="distance">Closest to campus</option></select></div><div class="table-scroll"><table><caption class="sr-only">Home sales matching the selected filters</caption><thead><tr><th scope="col">City / listing</th><th scope="col">Sale price</th><th scope="col">Living area</th><th scope="col">To campus</th><th scope="col">Days on market</th><th scope="col">Sold</th></tr></thead><tbody id="sales-table"></tbody></table></div><div class="pagination"><span id="page-label">—</span><div><button id="previous" class="outline-button" type="button" disabled>Previous</button><button id="next" class="outline-button" type="button" disabled>Next</button></div></div></article>
+</div></section>
+<section id="methodology" class="methodology"><div><p class="eyebrow dark">CONTEXT MATTERS</p><h2>Good comparisons start <br>with honest data.</h2><p>This is a historical snapshot of completed sales, not a live listing service or a measure of every home in a town.</p><a href="docs/data_description_sheet.md">Full data description</a> <span>·</span> <a href="data/college_town_home_sales.csv" download>Original CSV</a></div><div class="method-grid"><article><h3>A consistent price rule</h3><p id="exclusion-note">All views use sale prices from $10,000 through $5,000,000, inclusive. Original records are unchanged.</p></article><article><h3>Time to find a buyer</h3><p>Days on market = contract date − list date. Missing dates stay missing; only nonnegative intervals enter the median. Coverage is shown beside the metric. Missing dates are not random, so compare cities with care.</p></article><article><h3>Each sale stays a sale</h3><p>Listing ID identifies each record. Repeated street addresses are kept: separate units and repeat sales can share an address. Campus areas use the dataset’s nearest-campus assignment.</p></article><article><h3>Know what is left out</h3><p>Price per sq ft uses positive, reported living area. Home type is unreliable and is not used for filtering. Lot size, bathroom counts, and taxes contain anomalies and are not used in these metrics. City medians reflect different mixes of homes; distance does not establish causation.</p></article></div></section>
+</main><footer><a class="brand" href="#">Campus <span class="amp">&</span> Keys</a><p>College-town home sales dataset, v1.0 (2026).<br>University of Illinois-Deloitte Foundation Center for Business Emerging Technologies. Collected March 2026; values as reported, not verified against county records.</p><span>Built with assistance from ChatGPT Codex.<br><a href="https://github.com/ziqinice/college-town-home-sales/blob/main/AGENT_LOG.md">AI usage record</a></span></footer>
+<noscript><p class="error">Enable JavaScript to use the interactive explorer. The original CSV and data description remain available above.</p></noscript>
+</body></html>
